@@ -1,16 +1,25 @@
 package com.loto.ihunter.mvvm;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.ViewDataBinding;
 
+import com.loto.ihunter.bean.User;
+import com.loto.ihunter.event.IBaseEvent;
+
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -28,7 +37,18 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
         super.onCreate(savedInstanceState);
         setContentView();
         setFullScreen();
+        registerEventBus();
         initViews();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterEventBus();
+    }
+
+    @Override
+    public void initViews() {
     }
 
     @Override
@@ -67,6 +87,112 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
     }
 
     @Override
-    public void initViews() {
+    public void postDelay(Runnable task, long delay) {
+        Window window = getWindow();
+        View view = window.getDecorView();
+        view.postDelayed(task, delay);
+    }
+
+    @Override
+    public void postNow(Runnable task) {
+        Window window = getWindow();
+        View view = window.getDecorView();
+        view.post(task);
+    }
+
+    @Override
+    public void postAtTime(Runnable task, long timeMillis) {
+        long delay = timeMillis - System.currentTimeMillis();
+        postDelay(task, delay);
+    }
+
+    @Override
+    public void postEvent(IBaseEvent event) {
+        EventBus eventBus = EventBus.getDefault();
+        if (eventBus.isRegistered(this)) {
+            eventBus.post(event);
+        } else {
+            Log.d(TAG, "未注册EventBus，事件发送失败！");
+        }
+    }
+
+    @Override
+    public void registerEventBus() {
+        EventBus eventBus = EventBus.getDefault();
+        if (eventBus.isRegistered(this)) {
+            Log.d(TAG, "不可重复注册EventBus");
+        } else {
+            Class<?> clazz = this.getClass();
+            for (Method method : clazz.getMethods()) {
+                boolean pa = method.isAnnotationPresent(Subscribe.class);
+                if (pa) {
+                    Log.d(TAG, "method: " + method.getName());
+                    eventBus.register(this);
+                    return;
+                }
+            }
+            Log.d(TAG, "未发现事件订阅，注册失败");
+        }
+    }
+
+    @Override
+    public void unregisterEventBus() {
+        EventBus eventBus = EventBus.getDefault();
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this);
+        } else {
+            Log.d(TAG, "未注册EventBus");
+        }
+    }
+
+    @Override
+    public void onUpdateUserInfo(User user) {
+
+    }
+
+    @Override
+    public void updateUserInfo() {
+        User user = new User();
+        onUpdateUserInfo(user);
+    }
+
+    @Override
+    public int getScreenWidth() {
+        WindowManager manager = getWindowManager();
+        Display display = manager.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getRealMetrics(metrics);
+        return metrics.widthPixels;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        WindowManager manager = getWindowManager();
+        Display display = manager.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getRealMetrics(metrics);
+        return metrics.heightPixels;
+    }
+
+    @Override
+    public int getStatusBarHeight() {
+        Resources resources = getResources();
+        int result = 0;
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    @Override
+    public int getNavigationBarHeight() {
+        Resources resources = getResources();
+        int result = 0;
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }

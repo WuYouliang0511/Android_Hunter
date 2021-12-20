@@ -21,8 +21,6 @@ public interface IBaseView {
 
     void updateUserInfo();
 
-    int getLayoutId();
-
     int getScreenWidth();
 
     int getScreenHeight();
