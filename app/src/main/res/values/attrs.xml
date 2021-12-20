@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="scaleRatio" format="float" />
+    <attr name="scalePeriod" format="integer" />
+    <attr name="fastClickEnabled" format="boolean" />
+    <attr name="fastClickInterval" format="integer" />
+
+    <declare-styleable name="ScaleImageView">
+        <attr name="scaleRatio" />
+        <attr name="scalePeriod" />
+        <attr name="fastClickEnabled" />
+        <attr name="fastClickInterval" />
+    </declare-styleable>
+
+    <declare-styleable name="StrokeGradientText">
+        <attr name="strokeEnabled" format="boolean" />
+        <attr name="strokeColor" format="reference|color" />
+        <attr name="strokeWidth" format="reference|dimension" />
+        <attr name="shadowEnabled" format="boolean" />
+        <attr name="shadowColors" format="string|reference" />
+        <attr name="shadowType" format="enum">
+            <enum name="linear" value="0" />
+        </attr>
+        <attr name="orientation" format="enum">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+            <enum name="diagonal" value="2" />
+        </attr>
+        <attr name="linearType" format="enum">
+            <enum name="singleLine" value="0" />
+            <enum name="multipleLine" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="PasswordEditText">
+        <attr name="passwordNumber" format="integer" />
+        <attr name="passwordColor" format="color" />
+        <attr name="passwordRadius" format="dimension" />
+
+        <attr name="backgroundStyle" format="enum">
+            <enum name="underline" value="0" />
+            <enum name="border" value="1" />
+            <enum name="square" value="2" />
+        </attr>
+
+        <attr name="underlineWidth" format="dimension" />
+        <attr name="underlineHeight" format="dimension" />
+        <attr name="underlineColor" format="color" />
+
+        <attr name="borderStrokeWidth" format="dimension" />
+        <attr name="borderColor" format="color" />
+
+        <attr name="squareStrokeWidth" format="dimension" />
+        <attr name="squareColor" format="color" />
+        <attr name="squareInterval" format="dimension" />
+
+    </declare-styleable>
+
+    <declare-styleable name="ControllerView">
+        <attr name="center" format="reference" />
+        <attr name="up" format="reference" />
+        <attr name="down" format="reference" />
+        <attr name="left" format="reference" />
+        <attr name="right" format="reference" />
+        <attr name="interval" format="dimension" />
+    </declare-styleable>
+</resources>
