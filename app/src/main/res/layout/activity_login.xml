@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg3">
+
+        <com.lotogram.ihunter.widget.ScaleImageView
+            android:id="@+id/help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="25dp"
+            android:src="@drawable/login_help"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginTop="70dp" />
+
+        <com.lotogram.ihunter.widget.ScaleImageView
+            android:id="@+id/report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:src="@drawable/login_report"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/help"
+            app:layout_goneMarginTop="15dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onLogin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/agree"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+
+        <!--            android:layout_gravity="center_vertical"-->
+        <!--            android:padding="5dp"-->
+        <!--            android:src="@drawable/selector_checkbox_login"-->
+        <!--            android:theme="@style/LoginCheckBox"-->
+        <!--            app:layout_constraintBottom_toTopOf="@id/info"-->
+        <!--            app:layout_constraintStart_toStartOf="parent" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/protocol"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center|start"-->
+        <!--            android:paddingStart="5dp"-->
+        <!--            android:paddingEnd="0dp"-->
+        <!--            android:text="@string/login_protocol"-->
+        <!--            android:textColor="#686564"-->
+        <!--            android:textSize="12sp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/agree"-->
+        <!--            app:layout_constraintStart_toEndOf="@id/agree"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/agree" />-->
+
+        <include
+            android:id="@+id/addiction"
+            layout="@layout/layout_addiction_tip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/info"
+            layout="@layout/layout_game_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

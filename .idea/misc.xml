@@ -3,11 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.1685185185185185" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.45729166666666665" />
+        <entry key="app/src/main/res/drawable/checkbox_login.xml" value="0.45729166666666665" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3752136752136752" />
+        <entry key="app/src/main/res/drawable/toast.xml" value="0.3752136752136752" />
         <entry key="app/src/main/res/drawable/welcome.xml" value="1.0" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.4270833333333333" />
-        <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.23072916666666668" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.32222222222222224" />
+        <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/layout_addiction_tip.xml" value="0.33760683760683763" />
+        <entry key="app/src/main/res/layout/layout_game_info.xml" value="0.33760683760683763" />
+        <entry key="app/src/main/res/layout/widget_loto_toast.xml" value="0.9" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.45729166666666665" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.45729166666666665" />
       </map>
