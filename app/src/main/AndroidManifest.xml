@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.WelcomeActivity"
+            android:configChanges="screenSize|keyboard|orientation"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/LaunchTheme">
@@ -24,19 +25,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.LoginActivity"
+            android:configChanges="screenSize|keyboard|orientation"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.MainActivity"
+            android:configChanges="screenSize|keyboard|orientation"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".wxapi.WXEntryActivity"
+            android:configChanges="screenSize|keyboard|orientation"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"

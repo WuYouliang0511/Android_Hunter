@@ -53,9 +53,6 @@
             android:layout_height="35dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/login_icon02"
-            android:onClick="@{()->click.onLogin()}"
-            app:fastClickEnabled="false"
-            app:fastClickInterval="500"
             app:image="@drawable/login_icon_wechat"
             app:interval="10dp"
             app:layout_constraintBottom_toTopOf="@id/layout_agree"
@@ -81,6 +78,7 @@
                 android:background="@drawable/checkbox_login"
                 android:button="@null"
                 android:checked="false"
+                android:onClick="@{()->click.onAgree()}"
                 app:layout_constraintBottom_toTopOf="@id/info"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="TouchTargetSizeCheck" />

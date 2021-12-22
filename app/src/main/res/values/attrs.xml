@@ -5,12 +5,25 @@
     <attr name="scalePeriod" format="integer" />
     <attr name="fastClickEnabled" format="boolean" />
     <attr name="fastClickInterval" format="integer" />
+    <attr name="interval" format="reference|dimension" />
 
     <declare-styleable name="ScaleImageView">
         <attr name="scaleRatio" />
         <attr name="scalePeriod" />
         <attr name="fastClickEnabled" />
         <attr name="fastClickInterval" />
+    </declare-styleable>
+
+    <declare-styleable name="ScaleImageButton">
+        <attr name="scaleRatio" />
+        <attr name="scalePeriod" />
+        <attr name="fastClickEnabled" />
+        <attr name="fastClickInterval" />
+        <attr name="text" format="reference|string" localization="suggested" />
+        <attr name="textSize" format="reference|dimension" />
+        <attr name="textColor" format="reference|color" />
+        <attr name="image" format="reference" />
+        <attr name="interval" />
     </declare-styleable>
 
     <declare-styleable name="StrokeGradientText">
@@ -63,6 +76,6 @@
         <attr name="down" format="reference" />
         <attr name="left" format="reference" />
         <attr name="right" format="reference" />
-        <attr name="interval" format="dimension" />
+        <attr name="interval" />
     </declare-styleable>
 </resources>
