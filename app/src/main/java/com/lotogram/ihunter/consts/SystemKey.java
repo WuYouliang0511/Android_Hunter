@@ -22,4 +22,5 @@ public class SystemKey {
 
     public static final String SIGN = "sign";
 
+    public static final String CODE = "code";
 }

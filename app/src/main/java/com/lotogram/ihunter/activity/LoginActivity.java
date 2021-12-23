@@ -1,13 +1,10 @@
 package com.lotogram.ihunter.activity;
 
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
+import com.lotogram.ihunter.BuildConfig;
 import com.lotogram.ihunter.databinding.ActivityLoginBinding;
 import com.lotogram.ihunter.mvvm.BaseActivity;
 import com.lotogram.ihunter.util.WechatUtil;
@@ -16,15 +13,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> implements
         CompoundButton.OnCheckedChangeListener {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initViews() {
+        super.initViews();
         mBinding.setClick(this);
         mBinding.agree.setOnCheckedChangeListener(this);
-    }
-
-    public void onLogin(View view) {
-        Log.d(TAG, "onLogin: ");
-        WechatUtil.login();
+        mBinding.setVersion(BuildConfig.VERSION_NAME);
     }
 
     @Override
@@ -46,6 +39,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> implements
     @Override
     public void onLogin() {
         Log.d(TAG, "onLogin: ");
+        WechatUtil.login();
     }
 
     @Override

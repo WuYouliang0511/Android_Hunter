@@ -3,6 +3,8 @@ package com.lotogram.ihunter.util;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.lotogram.ihunter.BuildConfig;
 import com.lotogram.ihunter.consts.SystemKey;
 import com.lotogram.ihunter.consts.UserKey;
@@ -79,6 +81,13 @@ public class MMKVUtil {
         userMMKV = MMKV.mmkvWithID(uid, MMKV.MULTI_PROCESS_MODE, "9527");
     }
 
+    public static void setToken(String token) {
+        if (userMMKV == null) return;
+        Log.d(TAG, "保存当前用户token: " + token);
+        userMMKV.encode(UserKey.TOKEN, token);
+    }
+
+    @Nullable
     public static String getToken() {
         if (userMMKV == null) return null;
         String token = userMMKV.decodeString(UserKey.TOKEN);

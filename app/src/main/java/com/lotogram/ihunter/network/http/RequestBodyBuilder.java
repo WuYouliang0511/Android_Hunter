@@ -44,6 +44,13 @@ public class RequestBodyBuilder {
     }
 
     @NonNull
+    public static RequestBody getBody(@NonNull TreeMap<String, Object> map) {
+        map.put(SystemKey.SIGN, sign(map));
+        String json = JsonUtil.generateJson(map).toString();
+        return RequestBody.create(MediaTypes.JSON, json);
+    }
+
+    @NonNull
     private static String sign(@NonNull TreeMap<String, Object> map) {
         map.put(SystemKey.KEY, MMKVUtil.getKey());
         String rawMap = raw(map);
@@ -138,13 +145,6 @@ public class RequestBodyBuilder {
 //    @NonNull
 //    public static RequestBody getBaseBody() {
 //        Map<String, Object> map = getBaseMap();
-//        map.put(Key.SIGN, SignUtil.getSign(map));
-//        String json = JsonUtil.generateJson(map).toString();
-//        return RequestBody.create(json, MediaTypes.JSON);
-//    }
-//
-//    @NonNull
-//    public static RequestBody getBody(@NonNull Map<String, Object> map) {
 //        map.put(Key.SIGN, SignUtil.getSign(map));
 //        String json = JsonUtil.generateJson(map).toString();
 //        return RequestBody.create(json, MediaTypes.JSON);

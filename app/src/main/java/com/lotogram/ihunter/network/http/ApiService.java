@@ -1,6 +1,7 @@
 package com.lotogram.ihunter.network.http;
 
 import com.lotogram.ihunter.network.http.response.AppInfoResp;
+import com.lotogram.ihunter.network.http.response.WechatLoginResp;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -13,4 +14,7 @@ public interface ApiService {
     @POST("app/info")
     Observable<AppInfoResp> getAppInfo(@Body RequestBody body);
 
+    //微信登录
+    @POST("user/loginByWechat")
+    Observable<WechatLoginResp> loginByWeChat(@Body RequestBody body);
 }

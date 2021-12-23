@@ -9,6 +9,10 @@
             name="click"
             type="com.lotogram.ihunter.activity.LoginView" />
 
+        <variable
+            name="version"
+            type="java.lang.String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -117,7 +121,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:version="@{version}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="version"
+            type="java.lang.String" />
+
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -85,12 +89,14 @@
                 android:textSize="10sp" />
 
             <TextView
+                android:id="@+id/version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="@string/login_info8"
+                android:text="@{@string/login_info8(version)}"
                 android:textColor="#4DFFFFFF"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                tools:text="@string/login_info8" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
