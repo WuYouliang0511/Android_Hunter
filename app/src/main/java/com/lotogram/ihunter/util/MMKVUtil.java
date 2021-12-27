@@ -3,9 +3,11 @@ package com.lotogram.ihunter.util;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.lotogram.ihunter.BuildConfig;
+import com.lotogram.ihunter.bean.User;
 import com.lotogram.ihunter.consts.SystemKey;
 import com.lotogram.ihunter.consts.UserKey;
 import com.tencent.mmkv.MMKV;
@@ -18,6 +20,7 @@ public class MMKVUtil {
     private static MMKV systemKKMV;
 
     public static void initSystemMMKV() {
+        Log.d(TAG, "初始化系统信息本地存储");
         systemKKMV = MMKV.mmkvWithID(SystemKey.SYSTEM, MMKV.MULTI_PROCESS_MODE, "9527");
         systemKKMV.encode(SystemKey.APP_ID, "10008");
         systemKKMV.encode(SystemKey.OS, "android");
@@ -63,22 +66,70 @@ public class MMKVUtil {
         return key;
     }
 
-    public static void setUser(String uid) {
-        Log.d(TAG, "保存当前用户ID: " + uid);
-        systemKKMV.encode(SystemKey.USER, uid);
+    public static void setUser(@NonNull User user) {
+        String id = user.get_id();
+        Log.d(TAG, "保存当前用户ID: " + id);
+        systemKKMV.encode(SystemKey.USER, id);
+
+        initUserMMKV();
+        set_id(user.get_id());
+        setNickname(user.getNickname());
     }
 
     public static String getUser() {
-        String uid = systemKKMV.decodeString(SystemKey.USER);
-        Log.d(TAG, "获取当前用户ID: " + uid);
-        return uid;
+        String id = systemKKMV.decodeString(SystemKey.USER);
+        Log.d(TAG, "获取当前用户ID: " + id);
+        return id;
     }
     //----------------------------------------------------------------------------------------------
 
     public static void initUserMMKV() {
-        String uid = getUser();
-        if (TextUtils.isEmpty(uid)) return;
-        userMMKV = MMKV.mmkvWithID(uid, MMKV.MULTI_PROCESS_MODE, "9527");
+        String id = getUser();
+        if (TextUtils.isEmpty(id)) return;
+        Log.d(TAG, "初始化用户信息本地存储");
+        userMMKV = MMKV.mmkvWithID(id, MMKV.MULTI_PROCESS_MODE, "9527");
+    }
+
+    public static void set_id(String id) {
+        if (userMMKV == null) return;
+        Log.d(TAG, "保存当前用户id: " + id);
+        userMMKV.encode(UserKey.ID, id);
+    }
+
+    @Nullable
+    public static String get_id() {
+        if (userMMKV == null) return null;
+        String id = userMMKV.decodeString(UserKey.ID);
+        Log.d(TAG, "获取当前用户id: " + id);
+        return id;
+    }
+
+    public static void setNickname(String nickname) {
+        if (userMMKV == null) return;
+        Log.d(TAG, "保存当前用户nickname: " + nickname);
+        userMMKV.encode(UserKey.NICKNAME, nickname);
+    }
+
+    @Nullable
+    public static String getNickname() {
+        if (userMMKV == null) return null;
+        String nickname = userMMKV.decodeString(UserKey.NICKNAME);
+        Log.d(TAG, "获取当前用户nickname: " + nickname);
+        return nickname;
+    }
+
+    public static void setDescription(String description) {
+        if (userMMKV == null) return;
+        Log.d(TAG, "保存当前用户description: " + description);
+        userMMKV.encode(UserKey.DESCRIPTION, description);
+    }
+
+    @Nullable
+    public static String getDescription() {
+        if (userMMKV == null) return null;
+        String description = userMMKV.decodeString(UserKey.DESCRIPTION);
+        Log.d(TAG, "获取当前用户description: " + description);
+        return description;
     }
 
     public static void setToken(String token) {

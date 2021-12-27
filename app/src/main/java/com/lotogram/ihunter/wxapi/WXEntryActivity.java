@@ -8,23 +8,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.lotogram.ihunter.consts.SystemKey;
-import com.lotogram.ihunter.databinding.ActivityLoginBinding;
+import com.lotogram.ihunter.databinding.LayoutEmptyPageBinding;
+import com.lotogram.ihunter.event.LoginEvent;
 import com.lotogram.ihunter.mvvm.BaseActivity;
 import com.lotogram.ihunter.network.http.BaseObserver;
 import com.lotogram.ihunter.network.http.HttpEngine;
 import com.lotogram.ihunter.network.http.RequestBodyBuilder;
 import com.lotogram.ihunter.network.http.response.WechatLoginResp;
+import com.lotogram.ihunter.util.MMKVUtil;
 import com.lotogram.ihunter.util.WechatUtil;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.TreeMap;
 
 import okhttp3.RequestBody;
 
-public class WXEntryActivity extends BaseActivity<ActivityLoginBinding> implements IWXAPIEventHandler {
+public class WXEntryActivity extends BaseActivity<LayoutEmptyPageBinding> implements IWXAPIEventHandler {
 
     private static final int RETURN_MSG_TYPE_LOGIN = 1;
     private static final int RETURN_MSG_TYPE_SHARE = 2;
@@ -44,17 +48,18 @@ public class WXEntryActivity extends BaseActivity<ActivityLoginBinding> implemen
     }
 
     @Override
-    public void onReq(BaseReq baseReq) {
+    public void onReq(BaseReq req) {
 
     }
 
     @Override
     public void onResp(@NonNull BaseResp resp) {
-        Log.d(TAG, "Response");
+        String code = ((SendAuth.Resp) resp).code;
+        Log.d(TAG, "code: " + code);
         switch (resp.getType()) {
             case RETURN_MSG_TYPE_LOGIN:
                 Log.d(TAG, "处理登录事件");
-                dealWithLogin(resp.errCode, ((SendAuth.Resp) resp).code);
+                dealWithLogin(resp.errCode, code);
                 break;
             case RETURN_MSG_TYPE_SHARE:
                 Log.d(TAG, "处理登录事件");
@@ -63,73 +68,17 @@ public class WXEntryActivity extends BaseActivity<ActivityLoginBinding> implemen
             default:
                 break;
         }
-
-
-//        switch (resp.errCode) {
-//            case BaseResp.ErrCode.ERR_AUTH_DENIED://授权拒绝
-//                switch (resp.getType()) {
-//                    case RETURN_MSG_TYPE_LOGIN:
-////                        ToastUtil.showWithLog(TAG, "登录授权拒绝");
-//                        Log.d(TAG, "登录授权拒绝: ");
-//                        break;
-//                    case RETURN_MSG_TYPE_SHARE:
-////                        ToastUtil.showWithLog(TAG, "分享授权拒绝");
-//                        Log.d(TAG, "分享授权拒绝: ");
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                break;
-//            case BaseResp.ErrCode.ERR_USER_CANCEL://用户取消
-//                switch (resp.getType()) {
-//                    case RETURN_MSG_TYPE_LOGIN:
-////                        ToastUtil.showWithLog(TAG, "登录失败");
-//                        Log.d(TAG, "登录失败: ");
-//                        break;
-//                    case RETURN_MSG_TYPE_SHARE:
-////                        ToastUtil.showWithLog(TAG, "分享失败");
-//                        Log.d(TAG, "分享失败: ");
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                break;
-//            case BaseResp.ErrCode.ERR_OK:
-//                switch (resp.getType()) {
-//                    case RETURN_MSG_TYPE_LOGIN:
-//                        String code = ((SendAuth.Resp) resp).code;
-////                        login(code);
-//                        Toast.makeText(this, "登录成功", Toast.LENGTH_LONG).show();
-//                        Log.d(TAG, "登录成功: ");
-//
-////                        MMKVUtil.setUser("邬友亮");
-////                        MMKVUtil.initUserMMKV();
-////                        MMKVUtil.setToken("1111111");
-//
-////                        MMKVUtil.setUser("宋俊宝");
-////                        MMKVUtil.initUserMMKV();
-////                        MMKVUtil.setToken("2222222");
-//                        break;
-//                    case RETURN_MSG_TYPE_SHARE:
-////                        ToastUtil.showWithLog(TAG, "分享成功");
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-//        finish();
     }
 
     private void dealWithLogin(int errCode, String authCode) {
         switch (errCode) {
             case BaseResp.ErrCode.ERR_AUTH_DENIED://登录授权拒绝
                 Log.d(TAG, "登录授权拒绝");
+                finish();
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL://用户取消登录
                 Log.d(TAG, "用户取消登录");
+                finish();
                 break;
             case BaseResp.ErrCode.ERR_OK://用户登录成功
                 Log.d(TAG, "用户登录成功");
@@ -149,7 +98,6 @@ public class WXEntryActivity extends BaseActivity<ActivityLoginBinding> implemen
             case BaseResp.ErrCode.ERR_OK://用户分享成功
                 Log.d(TAG, "用户分享成功");
                 break;
-
         }
     }
 
@@ -161,12 +109,15 @@ public class WXEntryActivity extends BaseActivity<ActivityLoginBinding> implemen
             @Override
             public void onNext(@NonNull WechatLoginResp response) {
                 super.onNext(response);
-//                if (response.isOk()) {
-//                    MMKVUtil.setUserInfo(response.getUser());
-//                    MMKVUtil.setUserToken(response.getToken());
+                if (response.isOk()) {
+                    MMKVUtil.setUser(response.getUser());
+                    MMKVUtil.setToken(response.getToken());
 //                    MMKVUtil.setAdultMode(response.getAdultMode());
 //
-//                    LoginEvent event = new LoginEvent();
+                    LoginEvent event = new LoginEvent();
+                    event.setType(LoginEvent.WECHAT);
+                    EventBus.getDefault().post(event);
+
 //                    if (response.getUser().getIdcard() == 1) {
 //                        if (response.getUser().getAge() >= 18) {
 //                            event.setStatus(1);
@@ -179,9 +130,10 @@ public class WXEntryActivity extends BaseActivity<ActivityLoginBinding> implemen
 //                        event.setStatus(1);
 //                        Log.d(TAG, "未实名（允许登录，登录后需进行实名）");
 //                    }
-//                    EventBus.getDefault().post(event);
+//
+                }
+                finish();
             }
-//        }
         });
     }
 }

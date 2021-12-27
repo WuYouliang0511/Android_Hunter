@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
+    <queries>
+        <package android:name="com.tencent.mm" />
+        <package android:name="com.tencent.mobileqq" />
+    </queries>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -17,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activity.MediaActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.WelcomeActivity"
             android:configChanges="screenSize|keyboard|orientation"
@@ -49,12 +57,7 @@
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/TranslucentTheme" />
     </application>
-
-    <queries>
-        <package android:name="com.tencent.mm" />
-        <package android:name="com.tencent.mobileqq" />
-    </queries>
 
 </manifest>

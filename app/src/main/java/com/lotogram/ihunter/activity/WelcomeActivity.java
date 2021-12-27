@@ -14,13 +14,11 @@ public class WelcomeActivity extends BaseActivity<ActivityWelcomeBinding> {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Toast.makeText(this, "AAA", Toast.LENGTH_LONG).show();
-
         new Handler().postDelayed(() -> {
             Intent intent = new Intent();
             intent.setClass(WelcomeActivity.this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }, 3000);
-
     }
 }

@@ -1,13 +1,18 @@
 package com.lotogram.ihunter.activity;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.lotogram.ihunter.BuildConfig;
 import com.lotogram.ihunter.databinding.ActivityLoginBinding;
+import com.lotogram.ihunter.event.LoginEvent;
 import com.lotogram.ihunter.mvvm.BaseActivity;
 import com.lotogram.ihunter.util.WechatUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding> implements LoginView,
         CompoundButton.OnCheckedChangeListener {
@@ -18,6 +23,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> implements
         mBinding.setClick(this);
         mBinding.agree.setOnCheckedChangeListener(this);
         mBinding.setVersion(BuildConfig.VERSION_NAME);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLogin(LoginEvent event) {
+        Intent intent = new Intent();
+        intent.setClass(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
